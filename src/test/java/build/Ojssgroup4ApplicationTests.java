@@ -1,4 +1,4 @@
-package com.ojssgroup4.ojssgroup4;
+package build;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
