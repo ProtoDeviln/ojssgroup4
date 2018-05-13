@@ -18,6 +18,9 @@ public class JobRecruiter extends User{
     @OneToMany(mappedBy = "jobRecruiter")
     private HashSet<Job> jobs;
 
+    @OneToMany(mappedBy = "jobRecruiter")
+    private HashSet<Invitation> invitations;
+
     @Column
     private String type;
 
