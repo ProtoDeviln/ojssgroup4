@@ -23,12 +23,16 @@ public class JobSeeker extends User {
     @ManyToMany(mappedBy = "jobSeekers")
     private HashSet<Skill> skills;
 
+    @OneToMany(mappedBy = "jobSeeker")
+    private HashSet<Invitation> invitations;
+
     public JobSeeker(Long id, String exp, String email, String suburb, int postcode, String state, String address, Long phoneNumber, String userName, String password, String fname, String lname, String exp1, HashSet<Skill> skills, HashSet<Job> jobs) {
         super(id, exp, email, suburb, postcode, state, address, phoneNumber, userName, password);
         this.firstName = fname;
         this.lastName = lname;
         this.exp = exp1;
         this.skills = skills;
+        this.jobs = jobs;
     }
 
     public JobSeeker() {
