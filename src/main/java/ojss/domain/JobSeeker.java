@@ -18,13 +18,13 @@ public class JobSeeker extends User {
     private String exp;
 
     @ManyToMany(mappedBy = "jobSeekers")
-    private HashSet<Job> jobs;
+    private Set<Job> jobs = new HashSet<>();
 
     @ManyToMany(mappedBy = "jobSeekers")
-    private HashSet<Skill> skills;
+    private Set<Skill> skills = new HashSet<>();
 
     @OneToMany(mappedBy = "jobSeeker")
-    private HashSet<Invitation> invitations;
+    private Set<Invitation> invitations = new HashSet<>();
 
     public JobSeeker(Long id, String exp, String email, String suburb, int postcode, String state, String address, Long phoneNumber, String userName, String password, String fname, String lname, String exp1, HashSet<Skill> skills, HashSet<Job> jobs) {
         super(id, exp, email, suburb, postcode, state, address, phoneNumber, userName, password);
@@ -66,15 +66,15 @@ public class JobSeeker extends User {
         return skills;
     }
 
-    public void setSkills(HashSet<Skill> skills) {
+    public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
 
-    public HashSet<Job> getJobs() {
+    public Set<Job> getJobs() {
         return jobs;
     }
 
-    public void setJobs(HashSet<Job> jobs) {
+    public void setJobs(Set<Job> jobs) {
         this.jobs = jobs;
     }
 

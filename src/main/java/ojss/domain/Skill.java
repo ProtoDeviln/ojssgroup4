@@ -3,7 +3,9 @@ package ojss.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Set;
 
+@Entity
 @Table(name = "skill")
 public class Skill {
 
@@ -23,11 +25,11 @@ public class Skill {
     @JoinTable(name = "job_seeker_has_skill",
              joinColumns = { @JoinColumn(name = "job_seeker_id") },
              inverseJoinColumns = { @JoinColumn(name = "skill_skill_id") })
-    private HashSet<JobSeeker> jobSeekers;
+    private Set<JobSeeker> jobSeekers = new HashSet<>();
 
-    public Skill(Long id, String skillName, String skillDescription, HashSet<JobSeeker> jobSeekers) {
-        this.skillName = skillName;
+    public Skill(Long id, String skillName, String skillDescription, Set<JobSeeker> jobSeekers) {
         this.id = id;
+        this.skillName = skillName;
         this.skillDescription = skillDescription;
         this.jobSeekers = jobSeekers;
     }
@@ -56,11 +58,11 @@ public class Skill {
         this.skillDescription = skillDescription;
     }
 
-    public HashSet<JobSeeker> getJobSeekers() {
+    public Set<JobSeeker> getJobSeekers() {
         return jobSeekers;
     }
 
-    public void setJobSeekers(HashSet<JobSeeker> jobSeekers) {
+    public void setJobSeekers(Set<JobSeeker> jobSeekers) {
         this.jobSeekers = jobSeekers;
     }
 }
