@@ -31,6 +31,9 @@ public class JobSeeker extends User {
         this.skills = skills;
     }
 
+    public JobSeeker() {
+    }
+
     public String getFirstName() {
         return firstName;
     }

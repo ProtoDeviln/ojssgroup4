@@ -49,6 +49,8 @@ public abstract class User implements Serializable {
         this.suburb = suburb;
     }
 
+    public User() {
+    }
 
     public int getPostcode() {
         return postcode;
