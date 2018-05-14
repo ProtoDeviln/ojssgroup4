@@ -3,6 +3,7 @@ package ojss.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity(name = "job")
@@ -19,9 +20,9 @@ public class Job implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "application",
-           joinColumns = { @JoinColumn(name = "job_job_id"), @JoinColumn(name = "job_job_recruiter_id")},
-           inverseJoinColumns = { @JoinColumn(name = "job_seeker_id")} )
-    private HashSet<JobSeeker> jobSeekers;
+            joinColumns = {@JoinColumn(name = "job_job_id")},//, @JoinColumn(name = "job_job_recruiter_id")
+            inverseJoinColumns = {@JoinColumn(name = "job_seeker_id")})
+    private Set<JobSeeker> jobSeekers = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "job_recruiter_id")
@@ -48,7 +49,7 @@ public class Job implements Serializable {
     @Column(name = "job_type")
     private String jobType;
 
-    public Job(String jobName, HashSet<JobSeeker> jobSeekers, JobRecruiter jobRecruiter, String suburb, int postcode, String state, Double salary, String jobCategory, String jobDescription, String jobType) {
+    public Job(String jobName, Set<JobSeeker> jobSeekers, JobRecruiter jobRecruiter, String suburb, int postcode, String state, Double salary, String jobCategory, String jobDescription, String jobType) {
         this.jobName = jobName;
         this.jobSeekers = jobSeekers;
         this.jobRecruiter = jobRecruiter;
@@ -77,11 +78,11 @@ public class Job implements Serializable {
         this.jobName = jobName;
     }
 
-    public HashSet<JobSeeker> getJobSeekers() {
+    public Set<JobSeeker> getJobSeekers() {
         return jobSeekers;
     }
 
-    public void setJobSeekers(HashSet<JobSeeker> jobSeekers) {
+    public void setJobSeekers(Set<JobSeeker> jobSeekers) {
         this.jobSeekers = jobSeekers;
     }
 

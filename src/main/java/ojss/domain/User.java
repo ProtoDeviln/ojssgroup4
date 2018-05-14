@@ -2,6 +2,8 @@ package ojss.domain;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @MappedSuperclass
@@ -13,7 +15,9 @@ public abstract class User implements Serializable {
     @Column(updatable = false, nullable = false)
     private Long id;
 
-    @Column
+    @Column(nullable = false,unique = true)
+    @Email(message = "Please enter a valid e-mail address.")
+    @NotEmpty(message = "Please enter your e-mail address.")
     private String email;
 
     @Column

@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "job_recruiter")
 public class JobRecruiter extends User{
@@ -16,18 +17,20 @@ public class JobRecruiter extends User{
     private String introduction;
 
     @OneToMany(mappedBy = "jobRecruiter")
-    private HashSet<Job> jobs;
+    private Set<Job> jobs = new HashSet<>();
 
     @OneToMany(mappedBy = "jobRecruiter")
-    private HashSet<Invitation> invitations;
+    private Set<Invitation> invitations = new HashSet<>();
 
     @Column
     private String type;
 
-    public JobRecruiter(Long id, String exp, String email, String suburb, int postcode, String state, String address, Long phoneNumber, String userName, String password, String bussinessName, String introduction, String type) {
+    public JobRecruiter(Long id, String exp, String email, String suburb, int postcode, String state, String address, Long phoneNumber, String userName, String password, String bussinessName, String introduction, Set<Job> jobs, Set<Invitation> invitations, String type) {
         super(id, exp, email, suburb, postcode, state, address, phoneNumber, userName, password);
         this.bussinessName = bussinessName;
         this.introduction = introduction;
+        this.jobs = jobs;
+        this.invitations = invitations;
         this.type = type;
     }
 
@@ -47,20 +50,28 @@ public class JobRecruiter extends User{
         this.introduction = introduction;
     }
 
+    public Set<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(Set<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public Set<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(Set<Invitation> invitations) {
+        this.invitations = invitations;
+    }
+
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public HashSet<Job> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(HashSet<Job> jobs) {
-        this.jobs = jobs;
     }
 }
 
