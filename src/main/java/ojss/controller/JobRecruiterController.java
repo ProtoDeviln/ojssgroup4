@@ -4,20 +4,23 @@ import ojss.domain.JobRecruiter;
 import ojss.service.JobRecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
 @Controller
-public class JobRecruiterRegistrationController {
+public class JobRecruiterController {
 
     private JobRecruiterService jobRecruiterService;
 
     @Autowired
-    public JobRecruiterRegistrationController(JobRecruiterService jobRecruiterService) {
+    public JobRecruiterController(JobRecruiterService jobRecruiterService) {
         this.jobRecruiterService = jobRecruiterService;
     }
     @GetMapping(value = "/recruiterRegistration")
@@ -25,6 +28,17 @@ public class JobRecruiterRegistrationController {
         modelAndView.addObject("jobRecruiter", jobRecruiter);
         modelAndView.setViewName("recruiterRegistration");
         return modelAndView;
+    }
+    @RequestMapping(value = "/jobRecruiterLogin", method = RequestMethod.POST)
+    public String jobRecruiterLogin(JobRecruiter jobRecruiter, Model model) {
+        boolean verify = jobRecruiterService.verifyJobRecruiter(jobRecruiter);
+        if (verify) {
+            model.addAttribute("name", jobRecruiter.getEmail());
+            model.addAttribute("password", jobRecruiter.getPassword());
+            return "result";
+        } else {
+            return "redirect:/notVerify";
+        }
     }
 
     @PostMapping(value = "/recruiterRegistration")
@@ -41,10 +55,9 @@ public class JobRecruiterRegistrationController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("recruiterRegistration");
         } else {
-
             jobRecruiterService.addJobRecruiter(jobRecruiter);
-            }
-        return modelAndView;
+        }
+            return modelAndView;
     }
 
 }
