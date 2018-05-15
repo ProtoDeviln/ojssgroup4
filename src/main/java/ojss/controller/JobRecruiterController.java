@@ -29,16 +29,31 @@ public class JobRecruiterController {
         modelAndView.setViewName("recruiterRegistration");
         return modelAndView;
     }
+
+    @GetMapping(value="/jobRecruiterLogin")
+    public ModelAndView displayJobRecruiterLoginPage(ModelAndView modelAndView, JobRecruiter jobRecruiter) {
+        modelAndView.addObject("jobRecruiter", jobRecruiter);
+        modelAndView.setViewName("jobRecruiterLogin");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/jobRecruiterLogin", method = RequestMethod.POST)
-    public String jobRecruiterLogin(JobRecruiter jobRecruiter, Model model) {
-        boolean verify = jobRecruiterService.verifyJobRecruiter(jobRecruiter);
-        if (verify) {
-            model.addAttribute("name", jobRecruiter.getEmail());
-            model.addAttribute("password", jobRecruiter.getPassword());
-            return "result";
+    public ModelAndView jobRecruiterLogin(JobRecruiter jobRecruiter, ModelAndView modelAndView,BindingResult bindingResult) {
+        JobRecruiter jrExists = jobRecruiterService.findByEmail(jobRecruiter.getEmail());
+        JobRecruiter jrMatches = jobRecruiterService.verifyJobRecruiter(jobRecruiter);
+
+        //boolean verify = jobRecruiterService.verifyJobRecruiter(jobRecruiter);
+        if (jrExists == null) {
+            modelAndView.addObject("emailNotExist", "The email address that you've entered doesn't match any account.");
+            modelAndView.setViewName("jobRecruiterLogin");
+        } else if (jrMatches != null){
+            //modelAndView.addObject("loginSuccess", "Welcome back, " + jobRecruiter.getUserName() + "!");
+            modelAndView.setViewName("redirect:homePage");
         } else {
-            return "redirect:/notVerify";
+            modelAndView.addObject("wrongPwd", "Wrong password!");
+            modelAndView.setViewName("jobRecruiterLogin");
         }
+        return modelAndView;
     }
 
     @PostMapping(value = "/recruiterRegistration")
@@ -57,7 +72,7 @@ public class JobRecruiterController {
         } else {
             jobRecruiterService.addJobRecruiter(jobRecruiter);
         }
-            return modelAndView;
+        return modelAndView;
     }
 
 }

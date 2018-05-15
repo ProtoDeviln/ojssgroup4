@@ -53,6 +53,6 @@ public class JobSeekerController {
 
     @GetMapping(value = "/updateJobSeekerDetails")
     public ModelAndView updateJobSeekerDetails(ModelAndView modelAndView, JobSeeker jobSeeker) {
-        
+        return modelAndView;
     }
 }

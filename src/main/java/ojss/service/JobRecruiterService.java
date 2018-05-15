@@ -23,7 +23,14 @@ public class JobRecruiterService {
         jobRecruiterRepository.save(jobRecruiter);
     }
 
-
+    public JobRecruiter verifyJobRecruiter(JobRecruiter jobRecruiter) {
+        if (jobRecruiterRepository.findByEmailAndPassword(jobRecruiter.getEmail(), jobRecruiter.getPassword()) == null) {
+            jobRecruiter = null;
+            return jobRecruiter;
+        } else {
+            return jobRecruiter;
+        }
+    }
 
 
 
