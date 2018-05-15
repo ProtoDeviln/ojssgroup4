@@ -1,37 +1,58 @@
 package ojss.controller;
 
 import ojss.domain.JobSeeker;
-import ojss.repository.JobSeekerRepository;
+import ojss.service.JobSeekerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
-@RequestMapping(path="/demo")
 public class JobSeekerController {
+    private JobSeekerService jobSeekerService;
+
     @Autowired
-    private JobSeekerRepository jobSeekerRepository;
-
-    @GetMapping(path="/add")
-    public @ResponseBody
-    String addNewJobSeeker (@RequestParam String nickname, @RequestParam String pwd, @RequestParam String email) {
-
-        JobSeeker js = new JobSeeker();
-        js.setUserName(nickname);
-        js.setPassword(pwd);
-        js.setEmail(email);
-        jobSeekerRepository.save(js);
-        return "Saved";
+    public JobSeekerController(JobSeekerService jobSeekerService) {
+        this.jobSeekerService = jobSeekerService;
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<JobSeeker> getAllJobSeekers() {
-        // This returns a JSON or XML with the users
-        return jobSeekerRepository.findAll();
+    @GetMapping(value="/jobSeekerRegistration")
+    public ModelAndView registerJSPage(ModelAndView modelAndView, JobSeeker jobSeeker) {
+        modelAndView.addObject("jobSeeker", jobSeeker);
+        modelAndView.setViewName("jobSeekerRegistration");
+        return modelAndView;
+    }
+
+    @PostMapping(value="/jobSeekerRegistration")
+    public ModelAndView validateRegistration(ModelAndView modelAndView, @Valid JobSeeker jobSeeker,
+                                             BindingResult bindingResult, @RequestParam Map map) {
+        JobSeeker jsExists = jobSeekerService.findJobSeekerByEmail(jobSeeker.getEmail());
+
+        if (jsExists != null) {
+            modelAndView.addObject("registeredEmail", "Sorry, this e-mail has been used");
+            modelAndView.setViewName("jobSeekerRegistration");
+            bindingResult.reject("email");
+        }
+
+        if (bindingResult.hasErrors()){
+            modelAndView.setViewName("jobSeekerRegistration");
+        } else {
+            jobSeeker.setPassword(map.get("password").toString());
+            modelAndView.addObject("registrationSuccess","Congratulations!");
+            jobSeekerService.addNewJobSeeker(jobSeeker);
+
+        }
+        return modelAndView;
+
+
+    }
+
+    @GetMapping(value = "/updateJobSeekerDetails")
+    public ModelAndView updateJobSeekerDetails(ModelAndView modelAndView, JobSeeker jobSeeker) {
+        
     }
 }
-

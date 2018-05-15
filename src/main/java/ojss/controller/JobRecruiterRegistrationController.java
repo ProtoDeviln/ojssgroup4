@@ -43,8 +43,8 @@ public class JobRecruiterRegistrationController {
         } else {
 
             jobRecruiterService.addJobRecruiter(jobRecruiter);
-            return modelAndView;
-        }
+            }
+        return modelAndView;
     }
 
 }
