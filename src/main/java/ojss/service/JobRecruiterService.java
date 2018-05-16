@@ -6,8 +6,6 @@ import ojss.repository.JobRecruiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class JobRecruiterService {
@@ -21,6 +19,14 @@ public class JobRecruiterService {
 
     public void addJobRecruiter(JobRecruiter jobRecruiter) {
         jobRecruiterRepository.save(jobRecruiter);
+    }
+
+    public boolean verifyJobRecruiter(JobRecruiter jobRecruiter) {
+        if (jobRecruiterRepository.findByEmailAndPassword(jobRecruiter.getEmail(), jobRecruiter.getPassword()).isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
