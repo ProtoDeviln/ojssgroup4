@@ -25,6 +25,8 @@ public class JobRecruiter extends User{
     @Column
     private String type;
 
+    public JobRecruiter() {}
+
     public JobRecruiter(Long id, String exp, String email, String suburb, int postcode, String state, String address, Long phoneNumber, String userName, String password, String bussinessName, String introduction, Set<Job> jobs, Set<Invitation> invitations, String type) {
         super(id, exp, email, suburb, postcode, state, address, phoneNumber, userName, password);
         this.bussinessName = bussinessName;
