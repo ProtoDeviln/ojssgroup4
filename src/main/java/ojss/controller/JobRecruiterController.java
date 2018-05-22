@@ -1,18 +1,17 @@
 package ojss.controller;
 
+import ojss.domain.Job;
 import ojss.domain.JobRecruiter;
 import ojss.service.JobRecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 public class JobRecruiterController {
@@ -22,12 +21,6 @@ public class JobRecruiterController {
     @Autowired
     public JobRecruiterController(JobRecruiterService jobRecruiterService) {
         this.jobRecruiterService = jobRecruiterService;
-    }
-    @GetMapping(value = "/recruiterRegistration")
-    public ModelAndView displayRecruiterRegistrationPage(ModelAndView modelAndView, JobRecruiter jobRecruiter) {
-        modelAndView.addObject("jobRecruiter", jobRecruiter);
-        modelAndView.setViewName("recruiterRegistration");
-        return modelAndView;
     }
 
     @GetMapping(value="/jobRecruiterLogin")
@@ -56,23 +49,35 @@ public class JobRecruiterController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/recruiterRegistration")
-    public ModelAndView processRecruiterRegistration(ModelAndView modelAndView, @Valid JobRecruiter jobRecruiter, BindingResult bindingResult) {
-        JobRecruiter tempRecruiter = jobRecruiterService.findByEmail(jobRecruiter.getEmail());
-        System.out.println(tempRecruiter);
 
-        if (tempRecruiter != null) {
-            modelAndView.addObject("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email provided.");
-            modelAndView.setViewName("recruiterRegistration");
-            bindingResult.reject("email");
-        }
-
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("recruiterRegistration");
-        } else {
-            jobRecruiterService.addJobRecruiter(jobRecruiter);
-        }
+    @GetMapping(value="/jobRecruiterRegistration")
+    public ModelAndView registerJRPage(ModelAndView modelAndView, JobRecruiter jobRecruiter) {
+        modelAndView.addObject("jobRecruiter", jobRecruiter);
+        modelAndView.setViewName("jobRecruiterRegistration");
         return modelAndView;
     }
 
+    @PostMapping(value="/jobRecruiterRegistration")
+    public ModelAndView validateRegistration(ModelAndView modelAndView, @Valid JobRecruiter jobRecruiter,
+                                             BindingResult bindingResult, @RequestParam Map map) {
+        JobRecruiter jrExists = jobRecruiterService.findByEmail(jobRecruiter.getEmail());
+
+        if (jrExists != null) {
+            modelAndView.addObject("registeredEmail", "Sorry, this e-mail has been used");
+            modelAndView.setViewName("jobRecruiterRegistration");
+            bindingResult.reject("email");
+        }
+
+        if (bindingResult.hasErrors()){
+            modelAndView.setViewName("jobRecruiterRegistration");
+        } else {
+            jobRecruiter.setPassword(map.get("password").toString());
+            modelAndView.addObject("registrationSuccess","Congratulations!");
+            jobRecruiterService.addJobRecruiter(jobRecruiter);
+
+        }
+        return modelAndView;
+
+
+    }
 }
