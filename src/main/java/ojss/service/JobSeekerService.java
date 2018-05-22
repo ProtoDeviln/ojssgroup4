@@ -14,8 +14,19 @@ public class JobSeekerService {
         this.jobSeekerRepository = jobSeekerRepository;
     }
 
-    public JobSeeker findJobSeekerByEmail(String email) {
+    public JobSeeker findJobSeekerByEmail(String email)
+    {
         return jobSeekerRepository.findJobSeekerByEmail(email);
+    }
+
+    public JobSeeker findJobSeekerById(long id)
+    {
+        return jobSeekerRepository.findJobSeekerById(id);
+    }
+
+    public void updateJobSeeker(String address, String userName, int phone_number, String state, String suburb, String exp, long id)
+    {
+        jobSeekerRepository.updateJobSeekerById(address, userName, phone_number, state, suburb, exp, id);
     }
 
     public void addNewJobSeeker(JobSeeker jobSeeker) {

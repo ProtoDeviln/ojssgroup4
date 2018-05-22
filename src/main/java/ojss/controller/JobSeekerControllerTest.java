@@ -3,14 +3,14 @@ package ojss.controller;
 import ojss.domain.JobSeeker;
 import ojss.repository.JobSeekerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-@Controller
+@org.springframework.stereotype.Controller
 @RequestMapping(path="/demo")
 public class JobSeekerControllerTest {
     @Autowired

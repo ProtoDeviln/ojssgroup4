@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -23,8 +20,10 @@ public class JobRecruiterController {
     public JobRecruiterController(JobRecruiterService jobRecruiterService) {
         this.jobRecruiterService = jobRecruiterService;
     }
+
     @GetMapping(value = "/recruiterRegistration")
-    public ModelAndView displayRecruiterRegistrationPage(ModelAndView modelAndView, JobRecruiter jobRecruiter) {
+    public ModelAndView displayRecruiterRegistrationPage(ModelAndView modelAndView, JobRecruiter jobRecruiter)
+    {
         modelAndView.addObject("jobRecruiter", jobRecruiter);
         modelAndView.setViewName("recruiterRegistration");
         return modelAndView;
