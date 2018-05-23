@@ -79,6 +79,30 @@ public class JobSeekerController {
 
     @GetMapping(value = "/updateJobSeekerDetails")
     public ModelAndView updateJobSeekerDetails(ModelAndView modelAndView, JobSeeker jobSeeker) {
+        modelAndView.addObject("jobSeeker", jobSeeker);
+        modelAndView.setViewName("jobSeekerUpdate");
+
+
+        return modelAndView;
+    }
+
+    @PostMapping(value="/updateJobSeekerDetails")
+    public ModelAndView updateJobSeeker(ModelAndView modelAndView, JobSeeker jobSeeker, @RequestParam Map map) {
+
+        String address = map.get("address").toString();
+        String userName = map.get("userName").toString();
+        String pn = map.get("phoneNumber").toString();
+        int phone_number = Integer.parseInt(pn);
+        String state = map.get("state").toString();
+        String suburb = map.get("suburb").toString();
+        String exp = map.get("exp").toString();
+        String ident = map.get("id").toString();
+        long id = Long.parseLong(ident);
+
+        JobSeeker jbSeeker = jobSeekerService.findJobSeekerById(id);
+        jobSeekerService.updateJobSeeker(address, userName, phone_number, state, suburb, exp, id);
+        jobSeekerService.addNewJobSeeker(jobSeeker) ;
+        modelAndView.setViewName("jobSeekerUpdate");
         return modelAndView;
     }
 
