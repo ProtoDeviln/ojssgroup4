@@ -15,5 +15,5 @@ public interface JobSeekerRepository extends JpaRepository<JobSeeker, Long> {
 
     List<JobSeeker> findJobSeekersBySkills(String skill_nm);
 
-    //List<JobSeeker> findJobSeekersBySuburbIn()
+    JobSeeker findByEmailAndPassword(String email, String password);
 }

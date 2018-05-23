@@ -21,4 +21,13 @@ public class JobSeekerService {
     public void addNewJobSeeker(JobSeeker jobSeeker) {
         jobSeekerRepository.save(jobSeeker);
     }
+
+    public JobSeeker verifyJobSeeker(JobSeeker jobSeeker) {
+        if (jobSeekerRepository.findByEmailAndPassword(jobSeeker.getEmail(), jobSeeker.getPassword()) == null) {
+            jobSeeker = null;
+            return jobSeeker;
+        } else {
+            return jobSeeker;
+        }
+    }
 }

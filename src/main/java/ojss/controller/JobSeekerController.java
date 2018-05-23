@@ -51,8 +51,36 @@ public class JobSeekerController {
 
     }
 
+    @GetMapping(value="/jobSeekerLogin")
+    public ModelAndView displayJobSeekerLoginPage(ModelAndView modelAndView, JobSeeker jobRecruiter) {
+        modelAndView.addObject("jobSeeker", jobRecruiter);
+        modelAndView.setViewName("jobSeekerLogin");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/jobSeekerLogin", method = RequestMethod.POST)
+    public ModelAndView jobSeekerLogin(JobSeeker jobSeeker, ModelAndView modelAndView,BindingResult bindingResult) {
+        JobSeeker jsExists = jobSeekerService.findJobSeekerByEmail(jobSeeker.getEmail());
+        JobSeeker jsMatches = jobSeekerService.verifyJobSeeker(jobSeeker);
+
+        //boolean verify = jobRecruiterService.verifyJobRecruiter(jobRecruiter);
+        if (jsExists == null) {
+            modelAndView.addObject("emailNotExist", "The email address that you've entered doesn't match any account.");
+            modelAndView.setViewName("jobSeekerLogin");
+        } else if (jsMatches != null){
+            //modelAndView.addObject("loginSuccess", "Welcome back, " + jobRecruiter.getUserName() + "!");
+            modelAndView.setViewName("redirect:homePage");
+        } else {
+            modelAndView.addObject("wrongPwd", "Wrong password!");
+            modelAndView.setViewName("jobSeekerLogin");
+        }
+        return modelAndView;
+    }
+
     @GetMapping(value = "/updateJobSeekerDetails")
     public ModelAndView updateJobSeekerDetails(ModelAndView modelAndView, JobSeeker jobSeeker) {
         return modelAndView;
     }
+
+
 }
