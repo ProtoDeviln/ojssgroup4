@@ -86,6 +86,7 @@ public class JobSeekerController {
         return modelAndView;
     }
 
+
     @PostMapping(value="/updateJobSeekerDetails")
     public ModelAndView updateJobSeeker(ModelAndView modelAndView, JobSeeker jobSeeker, @RequestParam Map map) {
 
