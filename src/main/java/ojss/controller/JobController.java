@@ -24,4 +24,6 @@ public class JobController {
         List<Job> uList = jobService.findAll(pageNum, pageSize, job);
         return uList;
     }
+
+
 }
