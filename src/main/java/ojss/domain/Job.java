@@ -24,7 +24,7 @@ public class Job implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "job_seeker_id")})
     private Set<JobSeeker> jobSeekers = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional=false)
     @JoinColumn(name = "job_recruiter_id")
     private JobRecruiter jobRecruiter;
 

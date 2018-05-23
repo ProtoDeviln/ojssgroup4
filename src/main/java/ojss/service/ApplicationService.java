@@ -1,3 +1,4 @@
+/*
 package ojss.service;
 
 import ojss.domain.Application;
@@ -19,3 +20,4 @@ public class ApplicationService {
     }
 
 }
+*/

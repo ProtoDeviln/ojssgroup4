@@ -1,3 +1,4 @@
+/*
 package ojss.repository;
 
 import ojss.domain.Application;
@@ -15,3 +16,4 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findApplicationByJobRecruiterId(Long JobId);
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package ojss.domain;
 
 import javax.persistence.*;
@@ -27,8 +28,9 @@ public class Application {
     @Column(name = "app_detail")
     private String applicationDescription;
 
+
     @ManyToOne
-    @JoinColumn(name = "job_job_id")
+    @JoinColumn(name = "job_job_id",referencedColumnName="jobId")
     private Job job;
 
     @ManyToOne
@@ -94,3 +96,4 @@ public class Application {
         this.jobSeeker = jobSeeker;
     }
 }
+*/

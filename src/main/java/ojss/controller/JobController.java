@@ -17,6 +17,14 @@ public class JobController {
     JobService jobService;
 
     @GetMapping(value="/homePage")
+    public ModelAndView displayHomePage(ModelAndView modelAndView, Job job) {
+        modelAndView.addObject("job", job);
+        modelAndView.setViewName("homePage");
+        return modelAndView;
+    }
+
+
+    @PostMapping(value="/homePage")
     public ModelAndView searchPage(ModelAndView modelAndView, Job job) {
         modelAndView.addObject("job", job);
         modelAndView.setViewName("homePage");
@@ -30,6 +38,7 @@ public class JobController {
             modelAndView.setViewName("redirect:jobList");
             return modelAndView;}
     }
+
 
     /*
     @PostMapping(value = "/jobListPage/{pageNum}/{pageSize}")

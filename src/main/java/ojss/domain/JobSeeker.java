@@ -17,8 +17,10 @@ public class JobSeeker extends User {
     @Column
     private String exp;
 
+
+    /*
     @OneToMany(mappedBy = "jobSeeker")
-    private Set<Application> applications = new HashSet<>();
+    private Set<Application> applications = new HashSet<>();*/
 
     @ManyToMany(mappedBy = "jobSeekers")
     private Set<Job> jobs = new HashSet<>();
