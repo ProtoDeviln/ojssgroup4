@@ -1,3 +1,4 @@
+/*
 package ojss.service;
 
 
@@ -21,10 +22,12 @@ public class JobServiceImpl implements JobService{
     @Autowired
     private JobRepository jobRepository;
 
+
     @Override
     public List<Job> findAll() {
         return jobRepository.findAll();
     }
+
 
     @Override
     public List<Job> findAll(int pageNum, int pageSize, Job job) {
@@ -57,4 +60,4 @@ public class JobServiceImpl implements JobService{
 
 
 }
-
+*/

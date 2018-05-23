@@ -1,3 +1,4 @@
+
 package ojss.service;
 
 import ojss.domain.JobSeeker;

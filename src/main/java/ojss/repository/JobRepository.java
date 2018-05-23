@@ -17,4 +17,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findAll();
 
     List<Job> findAll(Specification<Job> spc, Pageable pageable);
+
+    List<Job> findAllByJobName(String jobName);
+
+    List<Job> findAllByJobTypeAndState(String type, String state);
 }

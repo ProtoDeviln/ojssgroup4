@@ -1,3 +1,4 @@
+
 package ojss.controller;
 
 
@@ -16,17 +17,27 @@ public class JobController {
     JobService jobService;
 
     @GetMapping(value="/homePage")
-    public ModelAndView searchPage(ModelAndView modelAndView) {
+    public ModelAndView searchPage(ModelAndView modelAndView, Job job) {
+        modelAndView.addObject("job", job);
         modelAndView.setViewName("homePage");
-        return modelAndView;
+        List<Job> jobList = jobService.findByJobName(job.getJobName());
+        if (jobList.isEmpty()){
+            modelAndView.setViewName("homePage");
+            return modelAndView;
+        }
+        else {
+            modelAndView.addObject("jobList", jobList);
+            modelAndView.setViewName("redirect:jobList");
+            return modelAndView;}
     }
 
+    /*
     @PostMapping(value = "/jobListPage/{pageNum}/{pageSize}")
     public List<Job> getJob(@PathVariable("pageNum") Integer pageNum,
                             @PathVariable("pageSize") Integer pageSize,
-                            @RequestBody Job job, ModelAndView modelAndView) {
-        modelAndView.addObject("job", job);
+                            @RequestBody Job job) {
         List<Job> jobList = jobService.findAll(pageNum, pageSize, job);
         return jobList;
     }
+    */
 }

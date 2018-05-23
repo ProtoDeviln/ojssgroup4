@@ -35,6 +35,9 @@ public class JobRecruiter extends User{
         this.type = type;
     }
 
+    public JobRecruiter(){
+
+    }
 
 
     public String getBussinessName() {
